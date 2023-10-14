@@ -24,6 +24,8 @@ public class HabitService {
     }
 
     public HabitModel createHabit(HabitModel habitModel) {
+        habitModel.setName(habitModel.getName().trim());
+        habitModel.setDescription(habitModel.getDescription().trim());
         return habitRepository.save(habitModel);
     }
 
@@ -37,7 +39,9 @@ public class HabitService {
         HabitModel habitModel = habitRepository.findById(id)
                 .orElseThrow(() -> new HabitNotFoundException("Can not find Habit with id %d!".formatted(id)));
         updateHabitModel.setId(habitModel.getId());
-        return habitRepository.save(habitModel);
+        updateHabitModel.setName(updateHabitModel.getName().trim());
+        updateHabitModel.setDescription(updateHabitModel.getDescription().trim());
+        return habitRepository.save(updateHabitModel);
     }
 }
 

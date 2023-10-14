@@ -1,7 +1,7 @@
 package tech.eeu.habittracker.controller;
 
-import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +37,7 @@ public class HabitController {
 
     @Operation(summary = "Create a new habit")
     @PostMapping
-    public ResponseEntity<HabitDto> createHabit(@RequestBody CreateHabitRequest createHabitRequest) {
+    public ResponseEntity<HabitDto> createHabit(@Valid @RequestBody CreateHabitRequest createHabitRequest) {
         HabitDto habitDto = habitFacade.createHabit(createHabitRequest);
         return ResponseEntity.ok(habitDto);
     }
@@ -57,7 +57,7 @@ public class HabitController {
 
     @Operation(summary = "Update a habit by id")
     @PutMapping("/{id}")
-    public ResponseEntity<HabitDto> updateHabit(@PathVariable("id") Long id, @RequestBody UpdateHabitRequest updateHabitRequest) {
+    public ResponseEntity<HabitDto> updateHabit(@PathVariable("id") Long id, @Valid @RequestBody UpdateHabitRequest updateHabitRequest) {
         HabitDto habitDto = habitFacade.updateHabit(id, updateHabitRequest);
         return ResponseEntity.ok(habitDto);
     }
