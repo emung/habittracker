@@ -11,4 +11,6 @@ public class HabitDto {
 
     private String description;
 
+    private String category;
+
 }
