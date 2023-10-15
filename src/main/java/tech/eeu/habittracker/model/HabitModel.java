@@ -27,4 +27,7 @@ public class HabitModel implements Serializable {
     @Column(nullable = false)
     public String description;
 
+    @Column(nullable = false)
+    public String category;
+
 }

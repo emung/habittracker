@@ -35,6 +35,13 @@ public class HabitController {
         return ResponseEntity.ok(habitDto);
     }
 
+    @Operation(summary = "Get all habits by category")
+    @GetMapping
+    public ResponseEntity<List<HabitDto>> getHabitsByCategory(@RequestParam(name = "category", defaultValue = "") String category) {
+        List<HabitDto> habitDtos = habitFacade.getAllHabitsByCategory(category == null ? "" : category.trim());
+        return ResponseEntity.ok(habitDtos);
+    }
+
     @Operation(summary = "Create a new habit")
     @PostMapping
     public ResponseEntity<HabitDto> createHabit(@Valid @RequestBody CreateHabitRequest createHabitRequest) {

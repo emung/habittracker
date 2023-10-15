@@ -43,5 +43,9 @@ public class HabitService {
         updateHabitModel.setDescription(updateHabitModel.getDescription().trim());
         return habitRepository.save(updateHabitModel);
     }
+
+    public List<HabitModel> getHabitsByCategory(String category) {
+        return habitRepository.findAllByCategory(category);
+    }
 }
 

@@ -1,9 +1,6 @@
 package tech.eeu.habittracker.mapper;
 
-import org.mapstruct.InjectionStrategy;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingConstants;
+import org.mapstruct.*;
 import org.springframework.stereotype.Component;
 import tech.eeu.habittracker.dto.HabitDto;
 import tech.eeu.habittracker.model.HabitModel;
@@ -17,6 +14,7 @@ import java.util.List;
         injectionStrategy = InjectionStrategy.FIELD)
 public interface HabitMapper {
 
+    @Mapping(target = "category", source = "category", defaultValue = "")
     HabitDto toDto(HabitModel habitModel);
 
     List<HabitDto> toDtoList(List<HabitModel> habitModels);

@@ -44,4 +44,9 @@ public class HabitFacade {
     public void deleteHabitById(Long id) {
         habitService.deleteHabitById(id);
     }
+
+    public List<HabitDto> getAllHabitsByCategory(String category) {
+        List<HabitModel> habitModels = habitService.getHabitsByCategory(category);
+        return habitMapper.toDtoList(habitModels);
+    }
 }
