@@ -8,6 +8,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import tech.eeu.habittracker.dto.HabitDto;
 import tech.eeu.habittracker.facade.HabitFacade;
 import tech.eeu.habittracker.request.CreateHabitRequest;
+import tech.eeu.habittracker.request.UpdateHabitRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,9 +89,24 @@ class HabitControllerTest {
     public void testCreateHabit() {
         CreateHabitRequest createHabitRequest = new CreateHabitRequest("Habit1", "Habit Description 1", "Main Habits");
         HabitDto expectedHabitDto = new HabitDto(1L, "Habit1", "Habit Description 1", "Main Habits");
+
         when(habitFacade.createHabit(createHabitRequest)).thenReturn(expectedHabitDto);
         HabitDto resultHabitDto = habitController.createHabit(createHabitRequest).getBody();
+
         assertNotNull(resultHabitDto);
         assertEquals(resultHabitDto, expectedHabitDto);
     }
+
+    @Test
+    public void testUpdateHabit() {
+        UpdateHabitRequest updateHabitRequest = new UpdateHabitRequest("Habit1", "Habit Description 1", "Main Habits");
+        HabitDto habitDto = new HabitDto(1L, "Habit1", "Habit Description 1", "Main Habits");
+
+        when(habitFacade.updateHabit(1L, updateHabitRequest)).thenReturn(habitDto);
+        HabitDto resultHabitDto = habitController.updateHabit(1L, updateHabitRequest).getBody();
+
+        assertNotNull(resultHabitDto);
+        assertEquals(habitDto, resultHabitDto);
+    }
+
 }
