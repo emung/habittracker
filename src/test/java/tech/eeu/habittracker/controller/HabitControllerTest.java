@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import tech.eeu.habittracker.dto.HabitDto;
 import tech.eeu.habittracker.facade.HabitFacade;
+import tech.eeu.habittracker.request.CreateHabitRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,4 +84,13 @@ class HabitControllerTest {
         assertNotEquals(resultList.get(0).getCategory(), resultList.get(1).getCategory());
     }
 
+    @Test
+    public void testCreateHabit() {
+        CreateHabitRequest createHabitRequest = new CreateHabitRequest("Habit1", "Habit Description 1", "Main Habits");
+        HabitDto expectedHabitDto = new HabitDto(1L, "Habit1", "Habit Description 1", "Main Habits");
+        when(habitFacade.createHabit(createHabitRequest)).thenReturn(expectedHabitDto);
+        HabitDto resultHabitDto = habitController.createHabit(createHabitRequest).getBody();
+        assertNotNull(resultHabitDto);
+        assertEquals(resultHabitDto, expectedHabitDto);
+    }
 }
