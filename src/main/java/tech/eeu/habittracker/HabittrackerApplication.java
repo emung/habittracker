@@ -8,8 +8,9 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan(basePackages = "tech.eeu.habittracker")
 public class HabittrackerApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(HabittrackerApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(HabittrackerApplication.class, args);
+    }
+
 
 }
