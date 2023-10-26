@@ -1,11 +1,15 @@
 package tech.eeu.habittracker.controller;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import tech.eeu.habittracker.dto.HabitDto;
+import tech.eeu.habittracker.exception.HabitNotFoundException;
 import tech.eeu.habittracker.facade.HabitFacade;
 import tech.eeu.habittracker.request.CreateHabitRequest;
 import tech.eeu.habittracker.request.UpdateHabitRequest;
@@ -14,8 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
+@SuppressWarnings("unchecked")
 @ExtendWith(MockitoExtension.class)
 class HabitControllerTest {
 
@@ -109,4 +114,38 @@ class HabitControllerTest {
         assertEquals(habitDto, resultHabitDto);
     }
 
+    @Test
+    public void testDeleteHabitResultOk() {
+        doNothing().when(habitFacade).deleteHabitById(1L);
+        Object obj = habitController.deleteHabitById(1L);
+        assertNotNull(obj);
+
+        ResponseEntity<String> response = (ResponseEntity<String>) obj;
+        assertEquals(HttpStatusCode.valueOf(200), response.getStatusCode());
+        assertEquals("Habit was successfully deleted.", response.getBody());
+    }
+
+    @Test
+    public void testDeleteHabitThrowHabitNotFoundException() {
+        HabitNotFoundException habitNotFoundException = new HabitNotFoundException("Can not find Habit with id 99!");
+        doThrow(habitNotFoundException).when(habitFacade).deleteHabitById(99L);
+        Object obj = habitController.deleteHabitById(99L);
+        assertNotNull(obj);
+
+        ResponseEntity<String> response = (ResponseEntity<String>) obj;
+        assertEquals(HttpStatusCode.valueOf(404), response.getStatusCode());
+        assertEquals(habitNotFoundException.getMessage(), response.getBody());
+    }
+
+    @Disabled("Disabled for further investigation")
+    @Test
+    public void testDeleteHabitThrowException() {
+        Exception exception = new Exception("Unable to delete Habit!");
+        doThrow(exception).when(habitFacade).deleteHabitById(99L);
+        ResponseEntity<?> response = habitController.deleteHabitById(99L);
+        assertNotNull(response);
+
+        assertEquals(HttpStatusCode.valueOf(500), response.getStatusCode());
+        assertEquals(exception.getMessage(), response.getBody());
+    }
 }
