@@ -20,6 +20,7 @@
         <maven.compiler.target>1.17</maven.compiler.target>
     </properties>
     <dependencies>
+        <!--  SPRING DEPENDENCIES START  -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -32,7 +33,34 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
+        <!--  SPRING DEPENDENCIES  END  -->
 
+        <!--  DEPEDENCIES FOR UNIT TESTS  START  -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-suite</artifactId>
+            <version>1.10.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>5.10.0</version>
+            <scope>test</scope>
+        </dependency>
+        <!--  DEPEDENCIES FOR UNIT TESTS  END  -->
+
+        <!--  OTHER DEPENDENCIES  START  -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
@@ -44,16 +72,6 @@
             <version>1.18.30</version>
             <optional>true</optional>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <!--		<dependency>-->
-        <!--			<groupId>org.projectlombok</groupId>-->
-        <!--			<artifactId>lombok-mapstruct-binding</artifactId>-->
-        <!--			<version>0.2.0</version>-->
-        <!--		</dependency>-->
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
@@ -74,6 +92,7 @@
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
             <version>2.2.0</version>
         </dependency>
+        <!--  OTHER DEPENDENCIES  END  -->
     </dependencies>
 
     <build>
