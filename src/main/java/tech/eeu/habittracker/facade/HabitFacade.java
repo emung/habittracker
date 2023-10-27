@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import tech.eeu.habittracker.dto.HabitDto;
 import tech.eeu.habittracker.mapper.HabitMapper;
 import tech.eeu.habittracker.model.HabitModel;
+import tech.eeu.habittracker.model.TargetPeriod;
 import tech.eeu.habittracker.request.CreateHabitRequest;
 import tech.eeu.habittracker.request.UpdateHabitRequest;
 import tech.eeu.habittracker.service.HabitService;
@@ -53,5 +54,20 @@ public class HabitFacade {
     public List<HabitDto> getAllHabitsByCategory(String category) {
         List<HabitModel> habitModels = habitService.getHabitsByCategory(category);
         return habitMapper.toDtoList(habitModels);
+    }
+
+    public HabitDto setHabitTarget(Long habitId, Integer target, TargetPeriod targetPeriod) {
+        HabitModel habitModel = habitService.setTargetForHabit(habitId, target, targetPeriod);
+        return habitMapper.toDto(habitModel);
+    }
+
+    public HabitDto incrementHabitTargetProgress(Long habitId, Integer incrementBy) {
+        HabitModel habitModel = habitService.incrementTargetProgress(habitId, incrementBy);
+        return habitMapper.toDto(habitModel);
+    }
+
+    public HabitDto decrementHabitTargetProgress(Long habitId, Integer decrementBy) {
+        HabitModel habitModel = habitService.decrementTargetProgress(habitId, decrementBy);
+        return habitMapper.toDto(habitModel);
     }
 }
