@@ -19,15 +19,27 @@ public class HabitModel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(updatable = false, nullable = false)
-    public Long id;
+    private Long id;
 
     @Column(nullable = false)
-    public String name;
+    private String name;
 
     @Column(nullable = false)
-    public String description;
+    private String description;
 
     @Column(nullable = false)
-    public String category;
+    private String category;
+
+    @Column
+    private Integer target;
+
+    @Column(name = "target_period")
+    @Enumerated(EnumType.STRING)
+    private TargetPeriod targetPeriod;
+
+    @Column(name = "target_progress")
+    private Integer targetProgress;
+
+
 
 }

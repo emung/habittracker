@@ -1,6 +1,9 @@
 package tech.eeu.habittracker.mapper;
 
-import org.mapstruct.*;
+import org.mapstruct.InjectionStrategy;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingConstants;
 import org.springframework.stereotype.Component;
 import tech.eeu.habittracker.dto.HabitDto;
 import tech.eeu.habittracker.model.HabitModel;

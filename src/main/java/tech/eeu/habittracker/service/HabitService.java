@@ -36,12 +36,18 @@ public class HabitService {
     }
 
     public HabitModel updateHabitById(Long id, HabitModel updateHabitModel) {
-        HabitModel habitModel = habitRepository.findById(id)
+        HabitModel existingHabitModel = habitRepository.findById(id)
                 .orElseThrow(() -> new HabitNotFoundException("Can not find Habit with id %d!".formatted(id)));
-        updateHabitModel.setId(habitModel.getId());
-        updateHabitModel.setName(updateHabitModel.getName().trim());
-        updateHabitModel.setDescription(updateHabitModel.getDescription().trim());
+        existingHabitModel.setName(updateHabitModel.getName().trim());
+        existingHabitModel.setDescription(updateHabitModel.getDescription().trim());
         return habitRepository.save(updateHabitModel);
+    }
+
+    public HabitModel updateHabitCategory(Long id, String category) {
+        HabitModel existingHabitModel = habitRepository.findById(id)
+                .orElseThrow(() -> new HabitNotFoundException("Can not find Habit with id %d!".formatted(id)));
+        existingHabitModel.setCategory(category.trim());
+        return habitRepository.save(existingHabitModel);
     }
 
     public List<HabitModel> getHabitsByCategory(String category) {
