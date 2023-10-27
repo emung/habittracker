@@ -40,6 +40,4 @@ public class HabitModel implements Serializable {
     @Column(name = "target_progress")
     private Integer targetProgress;
 
-
-
 }

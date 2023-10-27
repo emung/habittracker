@@ -9,9 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import tech.eeu.habittracker.dto.HabitDto;
 import tech.eeu.habittracker.exception.HabitNotFoundException;
 import tech.eeu.habittracker.facade.HabitFacade;
-import tech.eeu.habittracker.request.CreateHabitRequest;
-import tech.eeu.habittracker.request.UpdateHabitCategoryRequest;
-import tech.eeu.habittracker.request.UpdateHabitRequest;
+import tech.eeu.habittracker.request.*;
 
 import java.util.List;
 
@@ -70,12 +68,32 @@ public class HabitController {
         return ResponseEntity.ok(habitDto);
     }
 
-    @Operation(summary = "Update a habits category")
+    @Operation(summary = "Update a habits category by id")
     @PutMapping("/{id}/category")
     public ResponseEntity<HabitDto> updateHabitCategory(@PathVariable("id") Long id, @Valid @RequestBody UpdateHabitCategoryRequest updateHabitCategoryRequest) {
         HabitDto habitDto = habitFacade.updateHabitCategory(id, updateHabitCategoryRequest.getCategory());
         return ResponseEntity.ok(habitDto);
     }
 
+    @Operation(summary = "Set habit target")
+    @PutMapping("/{habitId}/target")
+    public ResponseEntity<HabitDto> setHabitTarget(@PathVariable("habitId") Long habitId, @Valid @RequestBody SetHabitTargetRequest setHabitTargetRequest) {
+        HabitDto habitDto = habitFacade.setHabitTarget(habitId, setHabitTargetRequest.getTarget(), setHabitTargetRequest.getTargetPeriod());
+        return ResponseEntity.ok(habitDto);
+    }
+
+    @Operation(summary = "Increment a habit target progress")
+    @PutMapping("/{habitId}/target/increment")
+    public ResponseEntity<HabitDto> incrementHabitProgress(@PathVariable("habitId") Long habitId, @Valid @RequestBody IncrementProgressRequest incrementProgressRequest) {
+        HabitDto habitDto = habitFacade.incrementHabitTargetProgress(habitId, incrementProgressRequest.getIncrementBy());
+        return ResponseEntity.ok(habitDto);
+    }
+
+    @Operation(summary = "Decrement a habit target progress")
+    @PutMapping("/{habitId}/target/decrement")
+    public ResponseEntity<HabitDto> decrementHabitProgress(@PathVariable("habitId") Long habitId, @Valid @RequestBody DecrementProgressRequest decrementProgressRequest) {
+        HabitDto habitDto = habitFacade.decrementHabitTargetProgress(habitId, decrementProgressRequest.getDecrementBy());
+        return ResponseEntity.ok(habitDto);
+    }
 
 }
