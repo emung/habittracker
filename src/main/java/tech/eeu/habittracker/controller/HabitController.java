@@ -10,6 +10,7 @@ import tech.eeu.habittracker.dto.HabitDto;
 import tech.eeu.habittracker.exception.HabitNotFoundException;
 import tech.eeu.habittracker.facade.HabitFacade;
 import tech.eeu.habittracker.request.CreateHabitRequest;
+import tech.eeu.habittracker.request.UpdateHabitCategoryRequest;
 import tech.eeu.habittracker.request.UpdateHabitRequest;
 
 import java.util.List;
@@ -68,5 +69,13 @@ public class HabitController {
         HabitDto habitDto = habitFacade.updateHabit(id, updateHabitRequest);
         return ResponseEntity.ok(habitDto);
     }
+
+    @Operation(summary = "Update a habits category")
+    @PutMapping("/{id}/category")
+    public ResponseEntity<HabitDto> updateHabitCategory(@PathVariable("id") Long id, @Valid @RequestBody UpdateHabitCategoryRequest updateHabitCategoryRequest) {
+        HabitDto habitDto = habitFacade.updateHabitCategory(id, updateHabitCategoryRequest.getCategory());
+        return ResponseEntity.ok(habitDto);
+    }
+
 
 }

@@ -41,6 +41,11 @@ public class HabitFacade {
         return habitMapper.toDto(habitService.updateHabitById(id, habitModel));
     }
 
+    public HabitDto updateHabitCategory(Long id, String category) {
+        HabitModel habitModel = habitService.updateHabitCategory(id, category);
+        return habitMapper.toDto(habitModel);
+    }
+
     public void deleteHabitById(Long id) {
         habitService.deleteHabitById(id);
     }
