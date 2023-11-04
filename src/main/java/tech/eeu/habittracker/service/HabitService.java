@@ -96,7 +96,7 @@ public class HabitService {
         if (habitModel.getTarget() == 0) {
             throw new HabitTargetProgressDecrementException("The habit target is not set yet! (value = 0)");
         } else if (habitModel.getTargetProgress() - decrementBy < 0) {
-            throw new HabitTargetProgressDecrementException("Can not decrement habit target progress by %d because it would be lower than 0!");
+            throw new HabitTargetProgressDecrementException("Can not decrement habit target progress by %d because it would be lower than 0!".formatted(decrementBy));
         }
 
         habitModel.setTargetProgress(habitModel.getTargetProgress() - decrementBy);
