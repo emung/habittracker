@@ -16,4 +16,7 @@ public class UpdateHabitRequest {
     @NotBlank(message = "A description is required to update a habit!")
     private String description;
 
+    @NotBlank(message = "A category is required to update a habit!")
+    private String category;
+
 }

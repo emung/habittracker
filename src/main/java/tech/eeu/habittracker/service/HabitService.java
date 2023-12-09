@@ -41,23 +41,15 @@ public class HabitService {
     }
 
     public void deleteHabitById(Long id) {
-        HabitModel habitModel = habitRepository.findById(id)
-                .orElseThrow(() -> new HabitNotFoundException("Can not find Habit with id %d!".formatted(id)));
+        HabitModel habitModel = this.getHabitById(id);
         habitRepository.delete(habitModel);
     }
 
     public HabitModel updateHabitById(Long id, HabitModel updateHabitModel) {
-        HabitModel existingHabitModel = habitRepository.findById(id)
-                .orElseThrow(() -> new HabitNotFoundException("Can not find Habit with id %d!".formatted(id)));
+        HabitModel existingHabitModel = this.getHabitById(id);
         existingHabitModel.setName(updateHabitModel.getName().trim());
         existingHabitModel.setDescription(updateHabitModel.getDescription().trim());
-        return habitRepository.save(existingHabitModel);
-    }
-
-    public HabitModel updateHabitCategory(Long id, String category) {
-        HabitModel existingHabitModel = habitRepository.findById(id)
-                .orElseThrow(() -> new HabitNotFoundException("Can not find Habit with id %d!".formatted(id)));
-        existingHabitModel.setCategory(category.trim());
+        existingHabitModel.setCategory(updateHabitModel.getCategory().trim());
         return habitRepository.save(existingHabitModel);
     }
 

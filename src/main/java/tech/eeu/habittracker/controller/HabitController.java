@@ -68,13 +68,6 @@ public class HabitController {
         return ResponseEntity.ok(habitDto);
     }
 
-    @Operation(summary = "Update a habits category by id")
-    @PutMapping("/{id}/category")
-    public ResponseEntity<HabitDto> updateHabitCategory(@PathVariable("id") Long id, @Valid @RequestBody UpdateHabitCategoryRequest updateHabitCategoryRequest) {
-        HabitDto habitDto = habitFacade.updateHabitCategory(id, updateHabitCategoryRequest.getCategory());
-        return ResponseEntity.ok(habitDto);
-    }
-
     @Operation(summary = "Set habit target")
     @PutMapping("/{habitId}/target")
     public ResponseEntity<HabitDto> setHabitTarget(@PathVariable("habitId") Long habitId, @Valid @RequestBody SetHabitTargetRequest setHabitTargetRequest) {
