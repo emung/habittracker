@@ -2,10 +2,12 @@ package tech.eeu.habittracker.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import tech.eeu.habittracker.model.TargetPeriod;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class HabitDto {
 
     private Long id;

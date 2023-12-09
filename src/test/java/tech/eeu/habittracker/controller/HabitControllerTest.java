@@ -73,7 +73,7 @@ class HabitControllerTest {
 
         HABIT_DTO = new HabitDto(1L, "Habit name1", "Habit description1", "Main category1", 3, TargetPeriod.DAILY, 1);
 
-        UPDATED_HABIT_DTO = new HabitDto(1L, "Updated Habit name1", "Updated Habit description1", "Main category1", 3, TargetPeriod.DAILY, 1);
+        UPDATED_HABIT_DTO = new HabitDto(1L, "Updated Habit name1", "Updated Habit description1", "Updated Habit category1", 3, TargetPeriod.DAILY, 1);
     }
 
     @Test
@@ -150,7 +150,7 @@ class HabitControllerTest {
     @Test
     @DisplayName("Update an existing habit by id")
     public void whenUpdateHabitThenReturnUpdatedHabit() {
-        UpdateHabitRequest updateHabitRequest = new UpdateHabitRequest("Updated Habit name1", "Updated Habit description1");
+        UpdateHabitRequest updateHabitRequest = new UpdateHabitRequest("Updated Habit name1", "Updated Habit description1", "Updated Habit category1");
         when(habitFacade.updateHabit(HABIT_DTO.getId(), updateHabitRequest)).thenReturn(UPDATED_HABIT_DTO);
 
         MockMvcResponse response = RestAssuredMockMvc.given()
@@ -167,5 +167,6 @@ class HabitControllerTest {
         assertEquals(HABIT_DTO.getId(), updatedHabitDto.getId());
         assertNotEquals(HABIT_DTO.getName(), updatedHabitDto.getName());
         assertNotEquals(HABIT_DTO.getDescription(), updatedHabitDto.getDescription());
+        assertNotEquals(HABIT_DTO.getCategory(), updatedHabitDto.getCategory());
     }
 }
