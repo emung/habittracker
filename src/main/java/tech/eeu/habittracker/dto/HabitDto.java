@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import tech.eeu.habittracker.model.TargetPeriod;
 
+import java.time.Instant;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,5 +25,9 @@ public class HabitDto {
     private TargetPeriod targetPeriod;
 
     private Integer targetProgress;
+
+    private Instant startDate;
+
+    private Instant endDate;
 
 }

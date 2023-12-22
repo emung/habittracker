@@ -37,3 +37,9 @@ databaseChangeLog:
               - column:
                   name: target_progress
                   type: int
+              - column:
+                  name: start_date
+                  type: date
+              - column:
+                  name: end_date
+                  type: date
