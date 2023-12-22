@@ -8,6 +8,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import tech.eeu.habittracker.model.TargetPeriod;
 
+import java.time.Instant;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -32,5 +34,9 @@ public class CreateHabitRequest {
     @NotNull(message = "The target progress can not be null, it must be atleast 0 or higher!")
     @Min(value = 0, message = "The target progress can not be lower than 0!")
     private Integer targetProgress;
+
+    private Instant startDate;
+
+    private Instant endDate;
 
 }

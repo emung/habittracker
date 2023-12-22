@@ -2,6 +2,7 @@ package tech.eeu.habittracker.service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import tech.eeu.habittracker.exception.CreateHabitException;
 import tech.eeu.habittracker.exception.HabitNotFoundException;
@@ -11,12 +12,14 @@ import tech.eeu.habittracker.model.HabitModel;
 import tech.eeu.habittracker.model.TargetPeriod;
 import tech.eeu.habittracker.repository.HabitRepository;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Objects;
 
 @RequiredArgsConstructor
 @Service
 @Transactional
+@Slf4j
 public class HabitService {
 
     private final HabitRepository habitRepository;
@@ -35,9 +38,19 @@ public class HabitService {
             throw new CreateHabitException("Habit can not be saved! Actual target progress can not be higher than the target.");
         }
 
+        if (habitModel.getEndDate() != null && habitModel.getStartDate() == null) {
+            habitModel.setStartDate(Instant.now());
+        }
+
+        if (habitModel.getEndDate() != null && habitModel.getEndDate().isBefore(habitModel.getStartDate())) {
+            throw new CreateHabitException("Habit can not be saved! The end date can not be before the start date!");
+        }
+
         habitModel.setName(habitModel.getName().trim());
         habitModel.setDescription(habitModel.getDescription().trim());
-        return habitRepository.save(habitModel);
+        HabitModel savedHabitModel = habitRepository.save(habitModel);
+        log.debug("Habit created: {}", habitModel);
+        return savedHabitModel;
     }
 
     public void deleteHabitById(Long id) {

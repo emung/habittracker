@@ -22,6 +22,7 @@ import tech.eeu.habittracker.model.TargetPeriod;
 import tech.eeu.habittracker.request.CreateHabitRequest;
 import tech.eeu.habittracker.request.UpdateHabitRequest;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,20 +61,20 @@ class HabitControllerTest {
     @BeforeAll
     public static void initializeHabitDtoList() {
         HABIT_DTOS = new ArrayList<>(List.of(
-                new HabitDto(1L, "Habit name1", "Habit description1", "Main category1", 3, TargetPeriod.DAILY, 1),
-                new HabitDto(2L, "Habit name2", "Habit description2", "Main category1", 3, TargetPeriod.DAILY, 1),
-                new HabitDto(3L, "Habit name3", "Habit description3", "Main category2", 3, TargetPeriod.DAILY, 1),
-                new HabitDto(4L, "Habit name4", "Habit description4", "Main category2", 3, TargetPeriod.DAILY, 1)
+                new HabitDto(1L, "Habit name1", "Habit description1", "Main category1", 3, TargetPeriod.DAILY, 1, Instant.now(), Instant.now().plusSeconds(86400)),
+                new HabitDto(2L, "Habit name2", "Habit description2", "Main category1", 3, TargetPeriod.DAILY, 1, Instant.now(), Instant.now().plusSeconds(86400)),
+                new HabitDto(3L, "Habit name3", "Habit description3", "Main category2", 3, TargetPeriod.DAILY, 1, Instant.now(), Instant.now().plusSeconds(86400)),
+                new HabitDto(4L, "Habit name4", "Habit description4", "Main category2", 3, TargetPeriod.DAILY, 1, Instant.now(), Instant.now().plusSeconds(86400))
         ));
 
         HABIT_DTOS_WITH_CATEGORY = new ArrayList<>(List.of(
-                new HabitDto(3L, "Habit name3", "Habit description3", "Main category2", 3, TargetPeriod.DAILY, 1),
-                new HabitDto(4L, "Habit name4", "Habit description4", "Main category2", 3, TargetPeriod.DAILY, 1)
+                new HabitDto(3L, "Habit name3", "Habit description3", "Main category2", 3, TargetPeriod.DAILY, 1, Instant.now(), Instant.now().plusSeconds(86400)),
+                new HabitDto(4L, "Habit name4", "Habit description4", "Main category2", 3, TargetPeriod.DAILY, 1, Instant.now(), Instant.now().plusSeconds(86400))
         ));
 
-        HABIT_DTO = new HabitDto(1L, "Habit name1", "Habit description1", "Main category1", 3, TargetPeriod.DAILY, 1);
+        HABIT_DTO = new HabitDto(1L, "Habit name1", "Habit description1", "Main category1", 3, TargetPeriod.DAILY, 1, Instant.now(), Instant.now().plusSeconds(86400));
 
-        UPDATED_HABIT_DTO = new HabitDto(1L, "Updated Habit name1", "Updated Habit description1", "Updated Habit category1", 3, TargetPeriod.DAILY, 1);
+        UPDATED_HABIT_DTO = new HabitDto(1L, "Updated Habit name1", "Updated Habit description1", "Updated Habit category1", 3, TargetPeriod.DAILY, 1, Instant.now(), Instant.now().plusSeconds(86400));
     }
 
     @Test
@@ -129,7 +130,8 @@ class HabitControllerTest {
     @Test
     @DisplayName("Create new habit")
     public void whenCreateNewHabitThenReturnHabitWithId() {
-        CreateHabitRequest createHabitRequest = new CreateHabitRequest("Habit name1", "Habit description1", "Main category1", 3, TargetPeriod.DAILY, 1);
+        CreateHabitRequest createHabitRequest = new CreateHabitRequest("Habit name1", "Habit description1", "Main category1",
+                3, TargetPeriod.DAILY, 1, Instant.now(), Instant.now().plusSeconds(86400));
         when(habitFacade.createHabit(createHabitRequest)).thenReturn(HABIT_DTO);
 
         MockMvcResponse response = RestAssuredMockMvc.given()
