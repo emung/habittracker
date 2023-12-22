@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import tech.eeu.habittracker.exception.CreateHabitException;
 import tech.eeu.habittracker.exception.HabitNotFoundException;
 import tech.eeu.habittracker.exception.HabitTargetProgressDecrementException;
 import tech.eeu.habittracker.exception.HabitTargetProgressIncrementException;
@@ -70,6 +71,20 @@ public class GlobalExceptionHandler {
                 .message("")
                 .error(httpStatus.getReasonPhrase())
                 .errors(getErrors(methodArgumentNotValidException))
+                .status(httpStatus.value())
+                .timestamp(LocalDateTime.now())
+                .path(httpServletRequest.getRequestURI())
+                .build();
+    }
+
+    @ExceptionHandler(CreateHabitException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public RestErrorResponse handleCreateHabitException(CreateHabitException createHabitException, HttpServletRequest httpServletRequest) {
+        HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
+        return RestErrorResponse.builder()
+                .message(createHabitException.getMessage())
+                .error(httpStatus.getReasonPhrase())
                 .status(httpStatus.value())
                 .timestamp(LocalDateTime.now())
                 .path(httpServletRequest.getRequestURI())
