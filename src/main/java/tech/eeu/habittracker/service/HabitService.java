@@ -4,10 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import tech.eeu.habittracker.exception.CreateHabitException;
-import tech.eeu.habittracker.exception.HabitNotFoundException;
-import tech.eeu.habittracker.exception.HabitTargetProgressDecrementException;
-import tech.eeu.habittracker.exception.HabitTargetProgressIncrementException;
+import tech.eeu.habittracker.exception.*;
 import tech.eeu.habittracker.model.HabitModel;
 import tech.eeu.habittracker.model.TargetPeriod;
 import tech.eeu.habittracker.repository.HabitRepository;
@@ -63,6 +60,17 @@ public class HabitService {
         existingHabitModel.setName(updateHabitModel.getName().trim());
         existingHabitModel.setDescription(updateHabitModel.getDescription().trim());
         existingHabitModel.setCategory(updateHabitModel.getCategory().trim());
+
+        if (updateHabitModel.getStartDate() == null && updateHabitModel.getEndDate() != null) {
+            updateHabitModel.setStartDate(Instant.now());
+        }
+        existingHabitModel.setStartDate(updateHabitModel.getStartDate());
+
+        if (updateHabitModel.getEndDate() != null && updateHabitModel.getEndDate().isBefore(updateHabitModel.getStartDate())) {
+            throw new UpdateHabitException("Habit can not be updated! The end date can not be before the start date!");
+        }
+        existingHabitModel.setEndDate(updateHabitModel.getEndDate());
+
         return habitRepository.save(existingHabitModel);
     }
 

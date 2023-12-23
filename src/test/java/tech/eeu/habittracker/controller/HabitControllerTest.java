@@ -152,7 +152,8 @@ class HabitControllerTest {
     @Test
     @DisplayName("Update an existing habit by id")
     public void whenUpdateHabitThenReturnUpdatedHabit() {
-        UpdateHabitRequest updateHabitRequest = new UpdateHabitRequest("Updated Habit name1", "Updated Habit description1", "Updated Habit category1");
+        UpdateHabitRequest updateHabitRequest = new UpdateHabitRequest("Updated Habit name1", "Updated Habit description1", "Updated Habit category1",
+                Instant.now(), Instant.now().plusSeconds(86400));
         when(habitFacade.updateHabit(HABIT_DTO.getId(), updateHabitRequest)).thenReturn(UPDATED_HABIT_DTO);
 
         MockMvcResponse response = RestAssuredMockMvc.given()
